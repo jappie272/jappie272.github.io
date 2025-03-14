@@ -8,6 +8,10 @@
   <style>
     .hidden { display: none; }
     .matched { visibility: hidden; }
+    .selected {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
   </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -104,6 +108,7 @@
     let firstCard = null;
 
     function handleCardClick(event) {
+    console.log("Card clicked:", event.currentTarget.textContent); // Debugging line
     const clickedCard = event.currentTarget;
     const selectedCards = document.querySelectorAll(".card.selected");
 
@@ -117,15 +122,10 @@
             updatePoints();
 
             setTimeout(() => {
-                // Remove matched cards
                 firstCard.remove();
                 clickedCard.remove();
-
-                // Remove the matched pair's index from the displayed set
                 displayedIndices.delete(Number(firstCard.dataset.index));
-
-                // Add new cards to maintain card count
-                addRandomCards(1); // Add one pair (2 cards)
+                addRandomCards(2);
             }, 300);
         } else {
             points--;
