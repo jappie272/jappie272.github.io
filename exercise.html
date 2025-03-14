@@ -103,40 +103,64 @@
 
     let firstCard = null;
 
-    function handleCardClick(event) {
-      const clickedCard = event.target;
-      if (clickedCard.classList.contains("matched")) return;
+   function addRandomCards(count) {
+    const gameArea = document.getElementById("game-area");
+    let added = 0;
 
-      clickedCard.classList.add("bg-green-200");
+    while (added < count && displayedIndices.size < pairs.length) {
+        const randomIndex = Math.floor(Math.random() * pairs.length);
 
-      if (!firstCard) {
-        firstCard = clickedCard;
-        return;
-      }
+        if (!displayedIndices.has(randomIndex)) {
+            displayedIndices.add(randomIndex);
+            const pair = pairs[randomIndex];
 
-      if (
-        firstCard.dataset.type !== clickedCard.dataset.type &&
-        verbs.some(
-          ({ jp, en }) =>
-            (firstCard.textContent === jp && clickedCard.textContent === en) ||
-            (firstCard.textContent === en && clickedCard.textContent === jp)
-        )
-      ) {
-        firstCard.classList.add("matched");
-        clickedCard.classList.add("matched");
-        score += 1;
-        scoreElement.textContent = score;
-        firstCard = null;
-      } else {
-        setTimeout(() => {
-          firstCard.classList.remove("bg-green-200");
-          clickedCard.classList.remove("bg-green-200");
-          score -= 1; // Deduct points on mismatch
-          scoreElement.textContent = score;
-          firstCard = null;
-        }, 1000);
-      }
+            const kanjiCard = createCard(pair.kanji, "kanji", randomIndex);
+            const hiraganaCard = createCard(pair.hiragana, "hiragana", randomIndex);
+            const englishCard = createCard(pair.english, "english", randomIndex);
+
+            // Randomize placement of cards
+            [kanjiCard, hiraganaCard, englishCard].sort(() => Math.random() - 0.5).forEach(card => {
+                gameArea.appendChild(card);
+            });
+
+            added++;
+        }
     }
+}
+
+function handleCardClick(event) {
+    const clickedCard = event.currentTarget;
+    const selectedCards = document.querySelectorAll(".card.selected");
+
+    if (selectedCards.length === 0) {
+        clickedCard.classList.add("selected");
+    } else if (selectedCards.length === 1) {
+        const firstCard = selectedCards[0];
+
+        if (
+            firstCard.dataset.index === clickedCard.dataset.index &&
+            firstCard.dataset.type !== clickedCard.dataset.type
+        ) {
+            points++;
+            updatePoints();
+
+            setTimeout(() => {
+                firstCard.remove();
+                clickedCard.remove();
+                displayedIndices.delete(Number(firstCard.dataset.index));
+                addRandomCards(1); // Replace one pair (two cards)
+            }, 300);
+        } else {
+            points--;
+            updatePoints();
+            setTimeout(() => {
+                firstCard.classList.remove("selected");
+                clickedCard.classList.remove("selected");
+            }, 300);
+        }
+    }
+}
+
 
     loadVerbs();
   </script>
