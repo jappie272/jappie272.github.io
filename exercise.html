@@ -104,39 +104,40 @@
     let firstCard = null;
 
     function handleCardClick(event) {
-      const clickedCard = event.target;
-      if (clickedCard.classList.contains("matched")) return;
+    const clickedCard = event.currentTarget;
+    const selectedCards = document.querySelectorAll(".card.selected");
 
-      clickedCard.classList.add("bg-green-200");
+    if (selectedCards.length === 0) {
+        clickedCard.classList.add("selected");
+    } else if (selectedCards.length === 1) {
+        const firstCard = selectedCards[0];
 
-      if (!firstCard) {
-        firstCard = clickedCard;
-        return;
-      }
+        if (firstCard.dataset.index === clickedCard.dataset.index && firstCard.dataset.type !== clickedCard.dataset.type) {
+            points++;
+            updatePoints();
 
-      if (
-        firstCard.dataset.type !== clickedCard.dataset.type &&
-        verbs.some(
-          ({ jp, en }) =>
-            (firstCard.textContent === jp && clickedCard.textContent === en) ||
-            (firstCard.textContent === en && clickedCard.textContent === jp)
-        )
-      ) {
-        firstCard.classList.add("matched");
-        clickedCard.classList.add("matched");
-        score += 1;
-        scoreElement.textContent = score;
-        firstCard = null;
-      } else {
-        setTimeout(() => {
-          firstCard.classList.remove("bg-green-200");
-          clickedCard.classList.remove("bg-green-200");
-          score -= 1; // Deduct points on mismatch
-          scoreElement.textContent = score;
-          firstCard = null;
-        }, 1000);
-      }
+            setTimeout(() => {
+                // Remove matched cards
+                firstCard.remove();
+                clickedCard.remove();
+
+                // Remove the matched pair's index from the displayed set
+                displayedIndices.delete(Number(firstCard.dataset.index));
+
+                // Add new cards to maintain card count
+                addRandomCards(1); // Add one pair (2 cards)
+            }, 300);
+        } else {
+            points--;
+            updatePoints();
+            setTimeout(() => {
+                firstCard.classList.remove("selected");
+                clickedCard.classList.remove("selected");
+            }, 300);
+        }
     }
+}
+
 
     loadVerbs();
   </script>
