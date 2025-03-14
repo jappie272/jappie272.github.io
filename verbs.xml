@@ -3,83 +3,267 @@
   <chapter name="Basic Verbs">
     <verb>
       <japanese>食べる</japanese>
+      <hiragana>たべる</hiragana>
       <english>to eat</english>
     </verb>
     <verb>
       <japanese>飲む</japanese>
+      <hiragana>のむ</hiragana>
       <english>to drink</english>
     </verb>
     <verb>
       <japanese>行く</japanese>
+      <hiragana>いく</hiragana>
       <english>to go</english>
     </verb>
     <verb>
       <japanese>来る</japanese>
+      <hiragana>くる</hiragana>
       <english>to come</english>
     </verb>
     <verb>
       <japanese>見る</japanese>
+      <hiragana>みる</hiragana>
       <english>to see</english>
     </verb>
     <verb>
       <japanese>聞く</japanese>
+      <hiragana>きく</hiragana>
       <english>to hear</english>
     </verb>
     <verb>
       <japanese>話す</japanese>
+      <hiragana>はなす</hiragana>
       <english>to speak</english>
     </verb>
     <verb>
       <japanese>書く</japanese>
+      <hiragana>かく</hiragana>
       <english>to write</english>
     </verb>
     <verb>
       <japanese>読む</japanese>
+      <hiragana>よむ</hiragana>
       <english>to read</english>
     </verb>
     <verb>
       <japanese>買う</japanese>
+      <hiragana>かう</hiragana>
       <english>to buy</english>
     </verb>
     <verb>
       <japanese>売る</japanese>
+      <hiragana>うる</hiragana>
       <english>to sell</english>
     </verb>
     <verb>
       <japanese>遊ぶ</japanese>
+      <hiragana>あそぶ</hiragana>
       <english>to play</english>
     </verb>
     <verb>
       <japanese>泳ぐ</japanese>
+      <hiragana>およぐ</hiragana>
       <english>to swim</english>
     </verb>
     <verb>
       <japanese>走る</japanese>
+      <hiragana>はしる</hiragana>
       <english>to run</english>
     </verb>
     <verb>
       <japanese>寝る</japanese>
+      <hiragana>ねる</hiragana>
       <english>to sleep</english>
     </verb>
     <verb>
       <japanese>起きる</japanese>
+      <hiragana>おきる</hiragana>
       <english>to wake up</english>
     </verb>
     <verb>
       <japanese>作る</japanese>
+      <hiragana>つくる</hiragana>
       <english>to make</english>
     </verb>
     <verb>
       <japanese>使う</japanese>
+      <hiragana>つかう</hiragana>
       <english>to use</english>
     </verb>
     <verb>
       <japanese>待つ</japanese>
+      <hiragana>まつ</hiragana>
       <english>to wait</english>
     </verb>
     <verb>
       <japanese>教える</japanese>
+      <hiragana>おしえる</hiragana>
       <english>to teach</english>
     </verb>
+    <verb>
+      <japanese>開ける</japanese>
+      <hiragana>あける</hiragana>
+      <english>to open</english>
+    </verb>
+    <verb>
+      <japanese>閉める</japanese>
+      <hiragana>しめる</hiragana>
+      <english>to close</english>
+    </verb>
+    <verb>
+      <japanese>立つ</japanese>
+      <hiragana>たつ</hiragana>
+      <english>to stand</english>
+    </verb>
+    <verb>
+      <japanese>座る</japanese>
+      <hiragana>すわる</hiragana>
+      <english>to sit</english>
+    </verb>
+    <verb>
+      <japanese>勉強する</japanese>
+      <hiragana>べんきょうする</hiragana>
+      <english>to study</english>
+    </verb>
+    <verb>
+      <japanese>走る</japanese>
+      <hiragana>はしる</hiragana>
+      <english>to run</english>
+    </verb>
+    <verb>
+      <japanese>飛ぶ</japanese>
+      <hiragana>とぶ</hiragana>
+      <english>to fly</english>
+    </verb>
+    <verb>
+      <japanese>持つ</japanese>
+      <hiragana>もつ</hiragana>
+      <english>to hold</english>
+    </verb>
+    <verb>
+      <japanese>聞く</japanese>
+      <hiragana>きく</hiragana>
+      <english>to listen</english>
+    </verb>
+    <verb>
+      <japanese>教える</japanese>
+      <hiragana>おしえる</hiragana>
+      <english>to instruct</english>
+    </verb>
+    <verb>
+      <japanese>覚える</japanese>
+      <hiragana>おぼえる</hiragana>
+      <english>to remember</english>
+    </verb>
+    <verb>
+      <japanese>忘れる</japanese>
+      <hiragana>わすれる</hiragana>
+      <english>to forget</english>
+    </verb>
+    <verb>
+      <japanese>持つ</japanese>
+      <hiragana>もつ</hiragana>
+      <english>to have</english>
+    </verb>
+    <verb>
+      <japanese>始める</japanese>
+      <hiragana>はじめる</hiragana>
+      <english>to start</english>
+    </verb>
+    <verb>
+      <japanese>終わる</japanese>
+      <hiragana>おわる</hiragana>
+      <english>to finish</english>
+    </verb>
+    <verb>
+      <japanese>送る</japanese>
+      <hiragana>おくる</hiragana>
+      <english>to send</english>
+    </verb>
+    <verb>
+      <japanese>泳ぐ</japanese>
+      <hiragana>およぐ</hiragana>
+      <english>to swim</english>
+    </verb>
+  </chapter>
+
+  <chapter name="Basic Nouns">
+    <noun>
+      <kanji>犬</kanji>
+      <hiragana>いぬ</hiragana>
+      <english>dog</english>
+    </noun>
+    <noun>
+      <kanji>猫</kanji>
+      <hiragana>ねこ</hiragana>
+      <english>cat</english>
+    </noun>
+    <noun>
+      <kanji>車</kanji>
+      <hiragana>くるま</hiragana>
+      <english>car</english>
+    </noun>
+    <noun>
+      <kanji>山</kanji>
+      <hiragana>やま</hiragana>
+      <english>mountain</english>
+    </noun>
+    <noun>
+      <kanji>川</kanji>
+      <hiragana>かわ</hiragana>
+      <english>river</english>
+    </noun>
+    <noun>
+      <kanji>空</kanji>
+      <hiragana>そら</hiragana>
+      <english>sky</english>
+    </noun>
+    <noun>
+      <kanji>学校</kanji>
+      <hiragana>がっこう</hiragana>
+      <english>school</english>
+    </noun>
+    <noun>
+      <kanji>本</kanji>
+      <hiragana>ほん</hiragana>
+      <english>book</english>
+    </noun>
+    <noun>
+      <kanji>机</kanji>
+      <hiragana>つくえ</hiragana>
+      <english>desk</english>
+    </noun>
+    <noun>
+      <kanji>椅子</kanji>
+      <hiragana>いす</hiragana>
+      <english>chair</english>
+    </noun>
+    <noun>
+      <kanji>窓</kanji>
+      <hiragana>まど</hiragana>
+      <english>window</english>
+    </noun>
+    <noun>
+      <kanji>木</kanji>
+      <hiragana>き</hiragana>
+      <english>tree</english>
+    </noun>
+    <noun>
+      <kanji>花</kanji>
+      <hiragana>はな</hiragana>
+      <english>flower</english>
+    </noun>
+    <noun>
+      <kanji>鳥</kanji>
+      <hiragana>とり</hiragana>
+      <english>bird</english>
+    </noun>
+    <noun>
+      <kanji>魚</kanji>
+      <hiragana>さかな</hiragana>
+      <english>fish</english>
+    </noun>
+
   </chapter>
 </verbs>

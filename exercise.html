@@ -1,144 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exercise - Card Matching</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <style>
-    .hidden { display: none; }
-    .matched { visibility: hidden; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Matching Exercise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            display: inline-block;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+
+        #points {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #game-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
-  <header class="bg-red-500 text-white p-4 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">Japanese Matching Exercise</h1>
-      <nav>
-        <ul class="flex space-x-4">
-          <li><a href="index.html" class="hover:underline">Home</a></li>
-          <li><a href="#" class="hover:underline">Exercise</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<body>
+    <h1>Japanese Matching Exercise</h1>
+    <div id="points">Points: 0</div>
+    <div id="game-area"></div>
 
-  <main class="container mx-auto py-8">
-    <section class="text-center mb-8">
-      <h2 class="text-2xl font-bold">Match Japanese Verbs with Their English Meanings</h2>
-      <p class="text-lg">Click on a card and its matching pair to earn points!</p>
-    </section>
+    <script>
+        const verbsURL = 'verbs.xml';
+        let points = 0;
+        let pairs = [];
+        const displayedCards = new Set();
 
-    <section class="flex justify-between items-start">
-      <!-- Matching Cards -->
-      <div class="grid grid-cols-2 gap-4 w-2/3">
-        <div id="card-container" class="grid grid-cols-2 gap-4"></div>
-      </div>
+        async function loadVerbs() {
+            const response = await fetch(verbsURL);
+            const xmlText = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+            const verbs = xmlDoc.getElementsByTagName("verb");
 
-      <!-- Point Counter -->
-      <div class="bg-white shadow-md rounded p-4 w-1/3">
-        <h3 class="text-xl font-bold">Score</h3>
-        <p id="score" class="text-3xl font-semibold">0</p>
-      </div>
-    </section>
-  </main>
+            pairs = Array.from(verbs).map(verb => {
+                return {
+                    kanji: verb.getElementsByTagName("japanese")[0].textContent,
+                    hiragana: verb.getElementsByTagName("hiragana")[0].textContent,
+                    english: verb.getElementsByTagName("english")[0].textContent
+                };
+            });
 
-  <footer class="bg-gray-800 text-white py-4 mt-12">
-    <div class="container mx-auto text-center">
-      <p>&copy; 2025 Learn Japanese. All rights reserved.</p>
-    </div>
-  </footer>
+            initializeGame();
+        }
 
-  <script>
-    let verbs = [];
+        function initializeGame() {
+            const gameArea = document.getElementById("game-area");
+            gameArea.innerHTML = '';
+            displayedCards.clear();
 
-    async function loadVerbs() {
-      const response = await fetch('verbs.xml');
-      const text = await response.text();
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(text, 'application/xml');
+            while (displayedCards.size < 7) {
+                const randomIndex = Math.floor(Math.random() * pairs.length);
+                if (!displayedCards.has(randomIndex)) {
+                    displayedCards.add(randomIndex);
+                    const pair = pairs[randomIndex];
 
-      const verbElements = xml.querySelectorAll('chapter[name="Basic Verbs"] verb');
-      verbs = Array.from(verbElements).map(verb => ({
-        jp: verb.querySelector('japanese').textContent,
-        en: verb.querySelector('english').textContent
-      }));
+                    const kanjiCard = createCard(pair.kanji, "kanji", randomIndex);
+                    const englishCard = createCard(pair.english, "english", randomIndex);
+                    gameArea.appendChild(kanjiCard);
+                    gameArea.appendChild(englishCard);
+                }
+            }
+        }
 
-      generateCards();
-    }
+        function createCard(content, type, index) {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.dataset.type = type;
+            card.dataset.index = index;
+            card.textContent = content;
+            card.addEventListener("click", handleCardClick);
+            return card;
+        }
 
-    let score = 0;
-    const cardContainer = document.getElementById("card-container");
-    const scoreElement = document.getElementById("score");
+        function handleCardClick(event) {
+            const clickedCard = event.currentTarget;
+            const selectedCards = document.querySelectorAll(".card.selected");
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
+            if (selectedCards.length === 0) {
+                clickedCard.classList.add("selected");
+            } else if (selectedCards.length === 1) {
+                const firstCard = selectedCards[0];
 
-    function generateCards() {
-      const selectedVerbs = verbs.slice(0, 7); // Select first 7 verbs
-      const cards = [];
+                if (firstCard.dataset.index === clickedCard.dataset.index && firstCard.dataset.type !== clickedCard.dataset.type) {
+                    points++;
+                    updatePoints();
 
-      selectedVerbs.forEach(({ jp, en }) => {
-        cards.push({ text: jp, type: "jp" });
-        cards.push({ text: en, type: "en" });
-      });
+                    setTimeout(() => {
+                        firstCard.remove();
+                        clickedCard.remove();
+                        addNewCards();
+                    }, 300);
+                } else {
+                    points--;
+                    updatePoints();
+                    setTimeout(() => {
+                        firstCard.classList.remove("selected");
+                    }, 300);
+                }
 
-      shuffle(cards);
+                clickedCard.classList.remove("selected");
+            }
+        }
 
-      cardContainer.innerHTML = "";
-      cards.forEach((card, index) => {
-        const cardElement = document.createElement("div");
-        cardElement.className = "bg-red-100 p-4 text-center rounded shadow cursor-pointer";
-        cardElement.textContent = card.text;
-        cardElement.dataset.type = card.type;
-        cardElement.dataset.index = index;
-        cardElement.addEventListener("click", handleCardClick);
-        cardContainer.appendChild(cardElement);
-      });
-    }
+        function updatePoints() {
+            document.getElementById("points").textContent = `Points: ${points}`;
+        }
 
-    let firstCard = null;
+        function addNewCards() {
+            const gameArea = document.getElementById("game-area");
 
-    function handleCardClick(event) {
-      const clickedCard = event.target;
-      if (clickedCard.classList.contains("matched")) return;
+            if (displayedCards.size < pairs.length) {
+                const randomIndex = Math.floor(Math.random() * pairs.length);
 
-      clickedCard.classList.add("bg-green-200");
+                if (!displayedCards.has(randomIndex)) {
+                    displayedCards.add(randomIndex);
+                    const pair = pairs[randomIndex];
 
-      if (!firstCard) {
-        firstCard = clickedCard;
-        return;
-      }
+                    const kanjiCard = createCard(pair.kanji, "kanji", randomIndex);
+                    const englishCard = createCard(pair.english, "english", randomIndex);
 
-      if (
-        firstCard.dataset.type !== clickedCard.dataset.type &&
-        verbs.some(
-          ({ jp, en }) =>
-            (firstCard.textContent === jp && clickedCard.textContent === en) ||
-            (firstCard.textContent === en && clickedCard.textContent === jp)
-        )
-      ) {
-        firstCard.classList.add("matched");
-        clickedCard.classList.add("matched");
-        score += 1;
-        scoreElement.textContent = score;
-        firstCard = null;
-      } else {
-        setTimeout(() => {
-          firstCard.classList.remove("bg-green-200");
-          clickedCard.classList.remove("bg-green-200");
-          score -= 1; // Deduct points on mismatch
-          scoreElement.textContent = score;
-          firstCard = null;
-        }, 1000);
-      }
-    }
+                    gameArea.appendChild(kanjiCard);
+                    gameArea.appendChild(englishCard);
+                }
+            }
+        }
 
-    loadVerbs();
-  </script>
+        loadVerbs();
+    </script>
 </body>
 </html>
