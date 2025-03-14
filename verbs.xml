@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<verbs>
+  <chapter name="Basic Verbs">
+    <verb>
+      <japanese>食べる</japanese>
+      <english>to eat</english>
+    </verb>
+    <verb>
+      <japanese>飲む</japanese>
+      <english>to drink</english>
+    </verb>
+    <verb>
+      <japanese>行く</japanese>
+      <english>to go</english>
+    </verb>
+    <verb>
+      <japanese>来る</japanese>
+      <english>to come</english>
+    </verb>
+    <verb>
+      <japanese>見る</japanese>
+      <english>to see</english>
+    </verb>
+    <verb>
+      <japanese>聞く</japanese>
+      <english>to hear</english>
+    </verb>
+    <verb>
+      <japanese>話す</japanese>
+      <english>to speak</english>
+    </verb>
+    <verb>
+      <japanese>書く</japanese>
+      <english>to write</english>
+    </verb>
+    <verb>
+      <japanese>読む</japanese>
+      <english>to read</english>
+    </verb>
+    <verb>
+      <japanese>買う</japanese>
+      <english>to buy</english>
+    </verb>
+    <verb>
+      <japanese>売る</japanese>
+      <english>to sell</english>
+    </verb>
+    <verb>
+      <japanese>遊ぶ</japanese>
+      <english>to play</english>
+    </verb>
+    <verb>
+      <japanese>泳ぐ</japanese>
+      <english>to swim</english>
+    </verb>
+    <verb>
+      <japanese>走る</japanese>
+      <english>to run</english>
+    </verb>
+    <verb>
+      <japanese>寝る</japanese>
+      <english>to sleep</english>
+    </verb>
+    <verb>
+      <japanese>起きる</japanese>
+      <english>to wake up</english>
+    </verb>
+    <verb>
+      <japanese>作る</japanese>
+      <english>to make</english>
+    </verb>
+    <verb>
+      <japanese>使う</japanese>
+      <english>to use</english>
+    </verb>
+    <verb>
+      <japanese>待つ</japanese>
+      <english>to wait</english>
+    </verb>
+    <verb>
+      <japanese>教える</japanese>
+      <english>to teach</english>
+    </verb>
+  </chapter>
+</verbs>
