@@ -54,7 +54,7 @@
         const verbsURL = 'verbs.xml';
         let points = 0;
         let pairs = [];
-        const displayedCards = new Set();
+        let displayedIndices = new Set();
 
         async function loadVerbs() {
             const response = await fetch(verbsURL);
@@ -77,18 +77,27 @@
         function initializeGame() {
             const gameArea = document.getElementById("game-area");
             gameArea.innerHTML = '';
-            displayedCards.clear();
+            displayedIndices.clear();
+            addRandomCards(7);
+        }
 
-            while (displayedCards.size < 7) {
+        function addRandomCards(count) {
+            const gameArea = document.getElementById("game-area");
+            let added = 0;
+
+            while (added < count && displayedIndices.size < pairs.length) {
                 const randomIndex = Math.floor(Math.random() * pairs.length);
-                if (!displayedCards.has(randomIndex)) {
-                    displayedCards.add(randomIndex);
+
+                if (!displayedIndices.has(randomIndex)) {
+                    displayedIndices.add(randomIndex);
                     const pair = pairs[randomIndex];
 
                     const kanjiCard = createCard(pair.kanji, "kanji", randomIndex);
                     const englishCard = createCard(pair.english, "english", randomIndex);
+
                     gameArea.appendChild(kanjiCard);
                     gameArea.appendChild(englishCard);
+                    added++;
                 }
             }
         }
@@ -119,41 +128,22 @@
                     setTimeout(() => {
                         firstCard.remove();
                         clickedCard.remove();
-                        addNewCards();
+                        displayedIndices.delete(Number(firstCard.dataset.index));
+                        addRandomCards(2);
                     }, 300);
                 } else {
                     points--;
                     updatePoints();
                     setTimeout(() => {
                         firstCard.classList.remove("selected");
+                        clickedCard.classList.remove("selected");
                     }, 300);
                 }
-
-                clickedCard.classList.remove("selected");
             }
         }
 
         function updatePoints() {
             document.getElementById("points").textContent = `Points: ${points}`;
-        }
-
-        function addNewCards() {
-            const gameArea = document.getElementById("game-area");
-
-            if (displayedCards.size < pairs.length) {
-                const randomIndex = Math.floor(Math.random() * pairs.length);
-
-                if (!displayedCards.has(randomIndex)) {
-                    displayedCards.add(randomIndex);
-                    const pair = pairs[randomIndex];
-
-                    const kanjiCard = createCard(pair.kanji, "kanji", randomIndex);
-                    const englishCard = createCard(pair.english, "english", randomIndex);
-
-                    gameArea.appendChild(kanjiCard);
-                    gameArea.appendChild(englishCard);
-                }
-            }
         }
 
         loadVerbs();
