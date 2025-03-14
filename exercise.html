@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <style>
     .hidden { display: none; }
+    .matched { visibility: hidden; }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -49,28 +50,22 @@
   </footer>
 
   <script>
-    const verbs = [
-      { jp: "食べる", en: "to eat" },
-      { jp: "飲む", en: "to drink" },
-      { jp: "行く", en: "to go" },
-      { jp: "来る", en: "to come" },
-      { jp: "見る", en: "to see" },
-      { jp: "聞く", en: "to hear" },
-      { jp: "話す", en: "to speak" },
-      { jp: "書く", en: "to write" },
-      { jp: "読む", en: "to read" },
-      { jp: "買う", en: "to buy" },
-      { jp: "売る", en: "to sell" },
-      { jp: "遊ぶ", en: "to play" },
-      { jp: "泳ぐ", en: "to swim" },
-      { jp: "走る", en: "to run" },
-      { jp: "寝る", en: "to sleep" },
-      { jp: "起きる", en: "to wake up" },
-      { jp: "作る", en: "to make" },
-      { jp: "使う", en: "to use" },
-      { jp: "待つ", en: "to wait" },
-      { jp: "教える", en: "to teach" },
-    ];
+    let verbs = [];
+
+    async function loadVerbs() {
+      const response = await fetch('verbs.xml');
+      const text = await response.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, 'application/xml');
+
+      const verbElements = xml.querySelectorAll('chapter[name="Basic Verbs"] verb');
+      verbs = Array.from(verbElements).map(verb => ({
+        jp: verb.querySelector('japanese').textContent,
+        en: verb.querySelector('english').textContent
+      }));
+
+      generateCards();
+    }
 
     let score = 0;
     const cardContainer = document.getElementById("card-container");
@@ -84,7 +79,7 @@
     }
 
     function generateCards() {
-      const selectedVerbs = verbs.slice(0, 5); // Select first 5 verbs
+      const selectedVerbs = verbs.slice(0, 7); // Select first 7 verbs
       const cards = [];
 
       selectedVerbs.forEach(({ jp, en }) => {
@@ -136,12 +131,14 @@
         setTimeout(() => {
           firstCard.classList.remove("bg-green-200");
           clickedCard.classList.remove("bg-green-200");
+          score -= 1; // Deduct points on mismatch
+          scoreElement.textContent = score;
           firstCard = null;
         }, 1000);
       }
     }
 
-    generateCards();
+    loadVerbs();
   </script>
 </body>
 </html>
